@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{k}{def} \PYG{n+nf}{part}\PYG{p}{(}\PYG{n}{N}\PYG{p}{,} \PYG{n}{tmin}\PYG{p}{,} \PYG{n}{tmax}\PYG{p}{):}
+    \PYG{n}{h} \PYG{o}{=} \PYG{p}{(}\PYG{n}{tmax} \PYG{o}{\PYGZhy{}} \PYG{n}{tmin}\PYG{p}{)}\PYG{o}{/}\PYG{n}{N}
+
+    \PYG{n}{t} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{N}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)}
+    \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{t}\PYG{p}{)):}
+        \PYG{n}{t}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{tmin} \PYG{o}{+} \PYG{n}{i}\PYG{o}{*}\PYG{n}{h}
+
+    \PYG{k}{return} \PYG{n}{t}
+\end{Verbatim}

@@ -16,6 +16,10 @@
 - EDPs Parabólicas
 - EDPs Hiperbólicas
 - Método de Crank-Nicolson
+- Método dos elementos finitos
 ### Avaliação
 - Difusão
 - Lista de exercícios
+
+## Referências
+A.M. Burden, R.L. Burden e D.J. Faires. Análise Numérica.

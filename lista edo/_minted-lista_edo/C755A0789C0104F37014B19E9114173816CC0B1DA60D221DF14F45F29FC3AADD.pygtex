@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{k}{def} \PYG{n+nf}{metodo\PYGZus{}de\PYGZus{}euler}\PYG{p}{(}\PYG{n}{g}\PYG{p}{,} \PYG{n}{N}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{tmin}\PYG{p}{,} \PYG{n}{tmax}\PYG{p}{):}
+    \PYG{k}{def} \PYG{n+nf}{f}\PYG{p}{(}\PYG{n}{t}\PYG{p}{,}\PYG{n}{x}\PYG{p}{):}
+        \PYG{n}{f} \PYG{o}{=} \PYG{n+nb}{eval}\PYG{p}{(}\PYG{n}{gx}\PYG{p}{)}
+        \PYG{k}{return} \PYG{n}{f}
+
+    \PYG{n}{h} \PYG{o}{=} \PYG{p}{(}\PYG{n}{tmax} \PYG{o}{\PYGZhy{}} \PYG{n}{tmin}\PYG{p}{)}\PYG{o}{/}\PYG{n}{N}
+    \PYG{n}{t} \PYG{o}{=} \PYG{n}{part}\PYG{p}{(}\PYG{n}{N}\PYG{p}{,} \PYG{n}{tmin}\PYG{p}{,} \PYG{n}{tmax}\PYG{p}{)}
+    \PYG{n}{w} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{N}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)}
+
+    \PYG{n}{w}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{=} \PYG{n}{y}
+    \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{w}\PYG{p}{)):}
+        \PYG{n}{w}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{w}\PYG{p}{[}\PYG{n}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{+} \PYG{n}{h}\PYG{o}{*}\PYG{n}{f}\PYG{p}{(}\PYG{n}{t}\PYG{p}{[}\PYG{n}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{w}\PYG{p}{[}\PYG{n}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{])} \PYG{c+c1}{\PYGZsh{} $w_i = w_{i-1} + hf(t_{i-1}, w_{i-1})$}
+
+    \PYG{k}{return} \PYG{n}{w}\PYG{p}{,}\PYG{n}{t}
+\end{Verbatim}

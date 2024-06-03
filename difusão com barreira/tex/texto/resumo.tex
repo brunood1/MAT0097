@@ -1,0 +1,122 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amsfonts, amsthm, amssymb, amsxtra}
+
+\usepackage{graphicx}
+\usepackage{float}
+
+\usepackage[dvipsnames]{xcolor}
+
+\usepackage{tabularray}
+\usepackage{enumitem}
+\usepackage{multicol}
+
+\usepackage{hyperref}
+\hypersetup{hidelinks}
+
+\usepackage[sfdefault]{notomath}
+
+\usepackage{tikz}
+\usetikzlibrary{intersections, angles, calc, positioning}
+\usetikzlibrary{shapes.geometric, arrows.meta}
+\usetikzlibrary{decorations.pathmorphing, decorations.pathreplacing}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+
+\begin{document}
+\begin{center}
+    \fbox{\LARGE\scshape Epidemia Zumbi}
+\end{center}
+
+\section{Explicação do problema}
+Por meio de equações diferenciais, é possível montar um modelo matématico para entender como uma população varia em um apocalipse zumbi, para isso iremos considerar três grupos
+\begin{itemize}[label=-]
+    \item Humanos (H)
+    \item Zumbis (Z)
+    \item Removidos [mortos que podem retornar como zumbis] (R)
+\end{itemize}
+as funções, $H(t)$, $Z(t)$ e $R(t)$ representam a população de cada grupo em dado instante de tempo.
+
+Nesse modelo também estamos considerando três parametros positivos
+\begin{itemize}[label=-]
+    \item $\alpha$ relacionado às interações humano-zumbi que removem zumbis
+    \item $\beta$ relacionado às interações humano-zumbi que transformam humanos em zumbis
+    \item $\zeta$ relacinado aos removidos que voltam como zumbis
+\end{itemize}
+
+O modelo funciona da seguinte forma, Uma interação entre um humano e um zumbi pode resultar em
+\begin{itemize}[label=-]
+    \item O humano sendo transformado em zumbi
+    \item O zumbi sendo removido
+\end{itemize}
+Além disso, apenas o grupo de humanos pode ser infectado por zumbis.
+Também é importante notar que nesse modelo não estamos considerando outras possíveis causas de morte em humanos e também estamos desconsiderando o nascimento de novos humanos, pois isso faria com que os zumbis tivessem uma fonte ilimitada de humanos para serem transformados em zumbis
+
+Assim, temos que o modelo é dado por
+\begin{align*}
+    H'(t) &= -\beta H(t) Z(t)\\
+    Z'(t) &= \beta H(t) Z(t) + \zeta R(t) - \alpha H(t) Z(t)\\
+    R'(t) &= \alpha H(t) Z(t) - \zeta R(t)
+\end{align*}
+
+\section{Consistencia}
+
+[explicar definição de consistencia olhar aula 9]
+
+Vamos analisar a consistencia utilizando o método de Euler, primeiramente vamos discretizar o sistema
+
+\begin{align*}
+    \frac{H(t_{n+1}) - H(t_n)}{h} &= -\beta H(t_n) Z(t_n)\\
+    \frac{Z(t_{n+1}) - Z(t_n)}{h} &= \beta H(t_n) Z(t_n) + \zeta R(t_n) - \alpha H(t_n) Z(t_n)\\
+    \frac{R(t_{n+1}) - R(t_n)}{h} &= \alpha H(t_n) Z(t_n) - \zeta R(t_n)
+\end{align*}
+
+e isolando os termos no instante de tempo $t_{n+1}$
+
+\begin{align*}
+    H(t_{n+1}) &=  H(t_n)  + h[-\beta H(t_n) Z(t_n)]\\
+    Z(t_{n+1}) &=  Z(t_n) + h[\beta H(t_n) Z(t_n) + \zeta R(t_n) - \alpha H(t_n) Z(t_n)]\\
+    R(t_{n+1}) &= R(t_n) + h[\alpha H(t_n) Z(t_n) - \zeta R(t_n)]
+\end{align*}
+
+Note que $t_{n+1} = t_n + h$, então podemos fazer uma expansão em Taylor para as equações no tempo $t_{n+1}$
+
+\begin{align*}
+    H(t_n + h) &= H(t_n) + H'(t_n) h + H''(t_n) \tfrac{h^2}{6} + \mathcal O (h^3)\\
+    Z(t_n + h) &= Z(t_n) + Z'(t_n) h + Z''(t_n) \tfrac{h^2}{6} + \mathcal O (h^3)\\
+    R(t_n + h) &= R(t_n) + R'(t_n) h + R''(t_n) \tfrac{h^2}{6} + \mathcal O (h^3)\\
+\end{align*}
+
+\begin{align*}
+    H(t_n + h) - H(t_n) - H'(t_n) h&=  H''(t_n) \tfrac{h^2}{6} + \mathcal O (h^3)\\
+    Z(t_n + h) - Z(t_n) + Z'(t_n) h&= Z''(t_n) \tfrac{h^2}{6} + \mathcal O (h^3)\\
+    R(t_n + h) - R(t_n) + R'(t_n) h&=  R''(t_n) \tfrac{h^2}{6} + \mathcal O (h^3)\\
+\end{align*}
+
+% \begin{align*}
+%     H(t_n + h) - [H(t_n)  + h[-\beta H(t_n) Z(t_n)]] &= H(t_n) + H'(t_n) h + H''(t_n) \tfrac{h^2}{6} + \mathcal O (h^3)\\
+%      &- [H(t_n)  + h[-\beta H(t_n) Z(t_n)]]\\
+%      Z(t_n + h) -[Z(t_n) + h[\beta H(t_n) Z(t_n) + \zeta R(t_n) - \alpha H(t_n) Z(t_n)]] &= Z(t_n) + Z'(t_n) h + Z''(t_n) \tfrac{h^2}{6} + \mathcal O (h^3)\\ 
+%      &-[Z(t_n) + h[\beta H(t_n) Z(t_n) + \zeta R(t_n) - \alpha H(t_n) Z(t_n)]]\\
+%      R(t_n + h) -[R(t_n) + h[\alpha H(t_n) Z(t_n) - \zeta R(t_n)]] &= R(t_n) + R'(t_n) h + R''(t_n) \tfrac{h^2}{6} + \mathcal O (h^3)\\
+%      &-[R(t_n) + h[\alpha H(t_n) Z(t_n) - \zeta R(t_n)]]\\
+% \end{align*}
+
+\begin{align*}
+    \frac{H(t_n + h) - H(t_n)}{h} - H'(t_n) &=  \mathcal{O}(h)\\
+    \frac{Z(t_n + h) - Z(t_n)}{h} - Z'(t_n) &= \mathcal{O}(h)\\
+    \frac{R(t_n + h) - R(t_n)}{h} - R'(t_n) &=  \mathcal{O}(h)\\
+\end{align*}
+
+Assim, temos que a forma explicita desse problema, com o método de Euler é consistente com ordem de consitencia linear $\mathcal O (h)$.
+
+Note que quando o passo $h$ tende a 0, a forma discretizada se aproxima da derivada
+
+
+
+
+\end{document}
